@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&S mineSweeper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>MINESWEEPER</h1>
+    <button type="button" id="play">Play</button>
+
+    <form>
+        <label for="width">Set Width:</label>
+        <select title="width" id="width">
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="35">35</option>
+            <option value="40">40</option>
+        </select>
+        <br>
+
+        <label for="height">Set Height:</label>
+        <select title="height" id="height">
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="35">35</option>
+            <option value="40">40</option>
+        </select>
+        <br>
+
+        <input type="submit" value="Play Game">
+    </form>
+
+    <!--div for grid display-->
+    <div id="grid"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

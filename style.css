@@ -1,0 +1,26 @@
+form {
+    display: none;
+}
+
+body {
+    background-color: cadetblue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
+}
+
+h1 {
+    color:brown;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button {
+    padding: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:coral;
+}
+
+td {
+    width:10px;
+    height:10px;
+    border: 1px solid black;
+}
