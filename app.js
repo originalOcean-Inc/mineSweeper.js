@@ -1,12 +1,19 @@
+// imports
+import { Cell, Grid } from "./objects.js"
+
+
+
 // create pointers to the play btn and the form
 const playBtn = document.getElementById("play")
 const form = document.querySelector("form")
+const grid = new Grid()
 
-// adds functionality to the play button that will rmeove it and show form in its place
+// adds functionality to the play button that will remove it and show form in its place
 playBtn.addEventListener("click", () => {
     playBtn.remove()
     form.style.display = "block"
 })
+
 
 
 function generateGrid(width, height) {
@@ -14,20 +21,34 @@ function generateGrid(width, height) {
     const div = document.getElementById("grid")
 
     // creates table element
-    const grid = document.createElement("table")
+    const display = document.createElement("table")
 
+    grid.width = width
+    grid.height = height
     // loops through for every 
-    for (let i = 0; i < height; i++) { 
+    for (let i = 1; i <= height; i++) { 
         let row = document.createElement("tr") // creates row
 
         // creates a td for every int in width and adds it to newly created row
-        for (let j = 0; j < width; j++) {
+        for (let j = 1; j <= width; j++) {
+
+            
             let td = document.createElement("td")
+            td.style.backgroundColor = "grey"
             row.appendChild(td)
+            let cell = new Cell(j,i,td)
+            grid.addCell(cell)
+            td.addEventListener("click", () => {
+                cell.click(grid)
+                console.log(grid)
+            })
+            td.id = `${j}${i}`
+            
         }
-        grid.appendChild(row)
+        display.appendChild(row)
     }
-    div.append(grid)
+    div.append(display)
+    console.log(grid)
 }
 
 form.addEventListener("submit", evt => {
@@ -37,5 +58,4 @@ form.addEventListener("submit", evt => {
     generateGrid(width, height)
     playBtn.remove()
     form.remove()
-
 })

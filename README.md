@@ -15,3 +15,7 @@ objects:
     - cell
 
 
+when the user clicks we need to generate a deadzone, this should be a random integer of squares, less than half but more than 9 around the first click, mines cannot be randomly generated in this zone.
+
+once the deadzone is identified, we need to randomly generate mines outside of the deadzone, 
+we will have 2 types of cells, 
