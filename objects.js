@@ -28,9 +28,19 @@ export class Cell {
 
             // show initial deadzone outline
             grid.showDeadzoneOutline()
-        } 
-
-        if (this.state == "empty") {
+        }
+        else if (grid.flag == true) {
+            let flagBtn = document.getElementById("flagBtn")
+            this.display.textContent = "X"
+            // removes event listners 
+            this.display.style.pointerEvents = "none"
+            
+            // reset flag btn
+            grid.flag = false
+            flagBtn.style.backgroundColor = "white"
+        
+        } else {
+            if (this.state == "empty") {
             this.state = "dead"
             this.hidden = false
             let surroundingCells = grid.getAllSurroundingCells(this)
@@ -38,21 +48,23 @@ export class Cell {
                 if (cell.state == "empty") {
                     cell.click(grid)
                 }
-            })
-            this.display.style.backgroundColor = "white"
-            grid.showDeadzoneOutline()
-        } else if (this.state == "bomb") {
-            console.log(this.x,this.y,"BOOM!")
-            this.display.style.backgroundColor = "red"
-            grid.state = "lose"
-        } else if (this.state == "marker") {
-            this.display.style.backgroundColor = "white"
-            this.hidden = false
-            this.display.textContent = this.marker
+                })
+                this.display.style.backgroundColor = "white"
+                grid.showDeadzoneOutline()
+            } else if (this.state == "bomb") {
+                console.log(this.x,this.y,"BOOM!")
+                this.display.style.backgroundColor = "red"
+                grid.state = "lose"
+            } else if (this.state == "marker") {
+                this.display.style.backgroundColor = "white"
+                this.hidden = false
+                this.display.textContent = this.marker
+            }
+            let win = grid.checkForWin()
+            return win
         }
-        let win = grid.checkForWin()
-        console.log("win state", win)
-        return win
+
+        
     }
 }
 
@@ -63,6 +75,7 @@ export class Grid {
         this.width = null
         this.height = null
         this.state = "initial"
+        this.flag = false
     }
     // this method works as expected
     addCell(cell) {
@@ -276,7 +289,7 @@ export class Grid {
     }
     removeClicks() {
         this.cells.forEach(cell => {
-            cell.display = null
+            cell.display.style.pointerEvents = "none"
         })
     }
     

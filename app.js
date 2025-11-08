@@ -10,6 +10,7 @@ let grid = new Grid()
 const winBox = document.getElementById("winBox")
 const div = document.getElementById("grid")
 
+
 // adds functionality to the play button that will remove it and show form in its place
 playBtn.addEventListener("click", () => {
     playBtn.remove()
@@ -31,8 +32,17 @@ function addPlayAgainBtn() {
 }
 
 function generateGrid(width, height) {
+    // generates board in the 'div' element
     winBox.textContent = ""
-    // grabs grid div from html
+    
+    let flagBtn = document.createElement("button")
+    flagBtn.textContent = "FLAG"
+    flagBtn.id = "flagBtn"
+    flagBtn.addEventListener("click", () => {
+        grid.flag = true
+        flagBtn.style.backgroundColor = "lightblue"
+    })
+    div.appendChild(flagBtn)
     
 
     // creates table element
@@ -53,7 +63,7 @@ function generateGrid(width, height) {
             row.appendChild(td)
             let cell = new Cell(j,i,td)
             grid.addCell(cell)
-            td.addEventListener("click", evt => {
+            td.addEventListener("click", () => {
                 let win = cell.click(grid)
                 console.log(grid)
                 // logic for if you win
@@ -66,6 +76,7 @@ function generateGrid(width, height) {
                 // logic if you lose
                 } else if (grid.state == "lose") {
                     winBox.textContent = "You Lose!"
+                    grid.removeClicks()
                     addPlayAgainBtn()
                 }
             })
@@ -78,6 +89,7 @@ function generateGrid(width, height) {
     console.log(grid)
 }
 
+
 form.addEventListener("submit", evt => {
     evt.preventDefault()
     const width = parseInt(document.getElementById("width").value)
@@ -87,3 +99,4 @@ form.addEventListener("submit", evt => {
     playBtn.remove()
     form.style.display = "none"
 })
+
