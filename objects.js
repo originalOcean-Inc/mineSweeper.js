@@ -5,6 +5,7 @@ export class Cell {
         this.display = display
         this.state = "empty"
         this.marker = null
+        this.hidden = true
     }
     getCoordinates() {
         return `${this.x}${this.y}`
@@ -16,6 +17,7 @@ export class Cell {
             // change the values of the clicked cell and create deadzone
             this.state = "dead"
             this.display.style.backgroundColor = "white"
+            this.hidden = false
             grid.createDeadZone(this)
             
             // place bombs 
@@ -30,6 +32,7 @@ export class Cell {
 
         if (this.state == "empty") {
             this.state = "dead"
+            this.hidden = false
             let surroundingCells = grid.getAllSurroundingCells(this)
             surroundingCells.forEach(cell => {
                 if (cell.state == "empty") {
@@ -41,10 +44,16 @@ export class Cell {
         } else if (this.state == "bomb") {
             console.log(this.x,this.y,"BOOM!")
             this.display.style.backgroundColor = "red"
+            document.getElementById("winBox").textContent = "You Lose!"
+            grid.removeClicks()
         } else if (this.state == "marker") {
             this.display.style.backgroundColor = "white"
+            this.hidden = false
             this.display.textContent = this.marker
         }
+        let win = grid.checkForWin()
+        console.log("win state", win)
+        return win
     }
 }
 
@@ -177,6 +186,7 @@ export class Grid {
             surroundingCells.forEach(cell => {
                 if (cell.state == "empty") {
                     cell.state = "dead"
+                    cell.hidden = false
                 cell.display.style.backgroundColor = "white"
                 deadCells ++
                 }
@@ -247,6 +257,28 @@ export class Grid {
                     cell.click(this)
                 }
             })
+        })
+    }
+    checkForWin() {
+        let clickableCells = []
+        let win = true
+        // loops through all cells and grabs any cell that isnt a bomb
+        this.cells.forEach(cell => {
+            if (cell.state != "bomb") {
+                clickableCells.push(cell)
+            }
+        })
+
+        clickableCells.forEach(cell => {
+            if (cell.hidden == true) {
+                win = false
+            }
+        })
+        return win
+    }
+    removeClicks() {
+        this.cells.forEach(cell => {
+            cell.display = null
         })
     }
     

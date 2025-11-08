@@ -7,6 +7,7 @@ import { Cell, Grid } from "./objects.js"
 const playBtn = document.getElementById("play")
 const form = document.querySelector("form")
 const grid = new Grid()
+const winBox = document.getElementById("winBox")
 
 // adds functionality to the play button that will remove it and show form in its place
 playBtn.addEventListener("click", () => {
@@ -38,9 +39,13 @@ function generateGrid(width, height) {
             row.appendChild(td)
             let cell = new Cell(j,i,td)
             grid.addCell(cell)
-            td.addEventListener("click", () => {
-                cell.click(grid)
+            td.addEventListener("click", evt => {
+                let win = cell.click(grid)
                 console.log(grid)
+                if (win == true) {
+                    winBox.textContent = "you win!"
+                    grid.removeClicks()
+                }
             })
             td.id = `${j}${i}`
             
