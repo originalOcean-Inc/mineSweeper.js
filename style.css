@@ -20,7 +20,9 @@ button {
 }
 
 td {
-    width:10px;
-    height:10px;
+    width:20px;
+    height:20px;
     border: 1px solid black;
+    text-align: center;
+    font-size: medium;
 }
